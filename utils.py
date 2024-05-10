@@ -26,9 +26,9 @@ def L1_loss(y_true,y_pred):
 
 def custom_loss(y_true,y_pred):
     L1_loss = K.mean(K.abs(y_true-y_pred),axis=-1)
-    SSIM_loss_0 =  tf.reduce_mean(tf.image.ssim_multiscale(SliceTensor(0)(y_true),SliceTensor(0)(y_pred),max_val=1.0))
-    SSIM_loss_1 =  tf.reduce_mean(tf.image.ssim_multiscale(SliceTensor(1)(y_true),SliceTensor(1)(y_pred),max_val=1.0))
-    SSIM_loss_2 =  tf.reduce_mean(tf.image.ssim_multiscale(SliceTensor(2)(y_true),SliceTensor(2)(y_pred),max_val=1.0))
+    SSIM_loss_0 =  tf.reduce_mean(tf.image.ssim_multiscale(SliceTensor(0)(y_true),SliceTensor(0)(y_pred),max_val=255))
+    SSIM_loss_1 =  tf.reduce_mean(tf.image.ssim_multiscale(SliceTensor(1)(y_true),SliceTensor(1)(y_pred),max_val=255))
+    SSIM_loss_2 =  tf.reduce_mean(tf.image.ssim_multiscale(SliceTensor(2)(y_true),SliceTensor(2)(y_pred),max_val=255))
     SSIM_loss = (3-SSIM_loss_0 - SSIM_loss_1 - SSIM_loss_2)/3.0
     loss = L1_loss + 2.0 * SSIM_loss
     return loss
