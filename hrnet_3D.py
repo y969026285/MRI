@@ -253,6 +253,7 @@ def fuse_layer3(x):
 
 
 def final_layer(x, classes=1):
+    x = BatchNormalization(axis=-1)(x) # added this line and it worked magically ¯\_(ツ)_/¯
     x = UpSampling3D(size=(1,1,1))(x)
     x = Conv3D(classes, kernel_size=(1,1,1), use_bias=False, kernel_initializer='he_normal')(x)
     x = BatchNormalization(axis=-1)(x)
