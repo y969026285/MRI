@@ -248,12 +248,13 @@ def fuse_layer3(x):
     x0_3 = Conv3D(32, kernel_size=(1,1,1), use_bias=False, kernel_initializer='he_normal')(x[3])
     x0_3 = BatchNormalization(axis=-1)(x0_3)
     x0_3 = UpSampling3D(size=(1,8,8))(x0_3)
-    x0 = concatenate([x0_0, x0_1])  #axis=-1
+    x0 = concatenate([x0_0, x0_1, x0_2, x0_3]) # replacement of line 251 because I think this makes a bit more sense, it consumes more RAM but doesn't break training.
+    # x0 = concatenate([x0_0, x0_1])    #axis=-1
     return x0
 
 
 def final_layer(x, classes=1):
-    x = BatchNormalization(axis=-1)(x) # added this line and it worked magically ¯\_(ツ)_/¯
+    # x = BatchNormalization(axis=-1)(x) # added this line and it worked magically ¯\_(ツ)_/¯, removed because it's no longer needed ¯\_(ツ)_/¯
     x = UpSampling3D(size=(1,1,1))(x)
     x = Conv3D(classes, kernel_size=(1,1,1), use_bias=False, kernel_initializer='he_normal')(x)
     x = BatchNormalization(axis=-1)(x)
